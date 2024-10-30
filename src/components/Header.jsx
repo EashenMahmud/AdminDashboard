@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Menu, Bell, User } from 'lucide-react';
+import { Menu, Bell, User, ChevronLeft } from 'lucide-react';
 import clsx from 'clsx';
 
 function Header() {
@@ -21,6 +21,15 @@ function Header() {
             aria-label="Toggle sidebar"
           >
             <Menu className="w-6 h-6 text-gray-600" />
+          </button>
+          <button
+            onClick={() => dispatch({ type: 'TOGGLE_SIDEBAR' })}
+            className="lg:block hidden p-1 hover:bg-gray-100 rounded-lg"
+          >
+            <Menu className={clsx(
+              'w-5 h-5 text-gray-500 transition-transform',
+              !isSidebarOpen 
+            )} />
           </button>
           <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
         </div>

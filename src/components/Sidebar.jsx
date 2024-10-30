@@ -1,25 +1,17 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Users, Settings, BarChart2, FileText, Mail, ChevronLeft } from 'lucide-react';
+import { X } from 'lucide-react';
 import clsx from 'clsx';
+import menuItems from '../data/menuItems'; // Adjust the path if needed
 
 function Sidebar() {
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector(state => state.isSidebarOpen);
   const location = useLocation();
 
-  const menuItems = [
-    { text: 'Dashboard', icon: Home, path: '/' },
-    { text: 'Analytics', icon: BarChart2, path: '/analytics' },
-    { text: 'Users', icon: Users, path: '/users' },
-    { text: 'Documents', icon: FileText, path: '/documents' },
-    { text: 'Messages', icon: Mail, path: '/messages' },
-    { text: 'Settings', icon: Settings, path: '/settings' }
-  ];
-
   const overlay = isSidebarOpen ? (
-    <div 
+    <div
       className="fixed inset-0 bg-black/50 lg:hidden z-40"
       onClick={() => dispatch({ type: 'TOGGLE_SIDEBAR' })}
     />
@@ -38,7 +30,6 @@ function Sidebar() {
           !isSidebarOpen && !window.matchMedia('(min-width: 1024px)').matches && '-translate-x-full'
         )}
       >
-        {/* Logo Section */}
         <div className="h-16 border-b flex items-center justify-between px-4">
           <Link to="/" className="flex items-center gap-3">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
@@ -50,16 +41,12 @@ function Sidebar() {
           </Link>
           <button
             onClick={() => dispatch({ type: 'TOGGLE_SIDEBAR' })}
-            className="lg:block hidden p-1 hover:bg-gray-100 rounded-lg"
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
           >
-            <ChevronLeft className={clsx(
-              'w-5 h-5 text-gray-500 transition-transform',
-              !isSidebarOpen && 'rotate-180'
-            )} />
+            <X className="w-6 h-6 text-gray-600" />
           </button>
         </div>
 
-        {/* Navigation */}
         <nav className="flex-1 overflow-y-auto p-4">
           <ul className="space-y-1">
             {menuItems.map((item) => {
@@ -71,8 +58,8 @@ function Sidebar() {
                     to={item.path}
                     className={clsx(
                       'flex items-center rounded-lg transition-colors',
-                      'hover:bg-gray-100 hover:text-gray-900',
-                      isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600',
+                      'hover:bg-gray-900 hover:text-white',
+                      isActive ? 'bg-gray-900 text-white' : 'text-gray-600',
                       isSidebarOpen ? 'px-3 py-2' : 'p-2 justify-center'
                     )}
                     title={!isSidebarOpen ? item.text : undefined}
